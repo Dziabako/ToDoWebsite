@@ -14,3 +14,8 @@ class RegisterForm(FlaskForm):
     password = PasswordField('Password', validators=[DataRequired(), Length(min=8)])
     confirm_password = PasswordField('Confirm Password', validators=[DataRequired(), EqualTo('password'), Length(min=8)])
     submit = SubmitField('Register')
+    
+
+class AddTodoForm(FlaskForm):
+    todo = StringField('Todo', validators=[DataRequired()])
+    submit = SubmitField('Add Todo')

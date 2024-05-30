@@ -2,6 +2,7 @@ from flask import render_template, Blueprint, flash, redirect, url_for
 from flask_login import login_user, logout_user, login_required
 from forms import LoginForm, RegisterForm
 from databases import User, db
+from werkzeug.security import generate_password_hash, check_password_hash
 
 
 user = Blueprint('user', __name__)
@@ -13,20 +14,20 @@ def login():
 
     if form.validate_on_submit():
         email = form.email.data
-        password = form.email.password
+        password = form.password.data
 
         user = User.query.filter(User.email == email).first()
 
         if not user:
             flash("There is no such user! You can register a new user!")
             return redirect(url_for("users.register"))
-        elif password != user.password:
+        elif not check_password_hash(user.password, password):
             flash("Wrong password!")
             return redirect(url_for("users.login"))
         else:
             login_user(user)
-            flash("Login successfull!")
-            return redirect(url_for("main.index"))
+            flash("Login successful!")
+            return redirect(url_for("todos.todos", user_id=user.id))
 
     return render_template('login.html')
 
@@ -39,6 +40,8 @@ def register():
         username = form.username.data
         email = form.email.data
         password = form.password.data
+        hashed_password = generate_password_hash(password)
+
 
         user = User.query.filter(User.email == email).first()
 
@@ -46,7 +49,7 @@ def register():
             flash("User already exists!")
             return redirect(url_for("users.register"))
         else:
-            new_user = User(username=username, email=email, password=password)
+            new_user = User(username=username, email=email, password=hashed_password)
             db.session.add(new_user)
             db.session.commit()
             flash("User created successfully!")
