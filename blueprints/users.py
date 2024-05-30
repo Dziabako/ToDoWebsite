@@ -1,11 +1,19 @@
 from flask import render_template, Blueprint, flash, redirect, url_for
-from flask_login import login_user, logout_user, login_required
+from flask_login import login_user, logout_user, login_required, LoginManager
 from forms import LoginForm, RegisterForm
 from databases import User, db
 from werkzeug.security import generate_password_hash, check_password_hash
 
 
 user = Blueprint('user', __name__)
+
+
+login_manager = LoginManager()
+login_manager.login_view = 'user.login'
+
+@login_manager.user_loader
+def load_user(user_id):
+    return User.query.filter(User.id == user_id).first()
 
 
 @user.route('/login', methods=["GET", "POST"])
@@ -54,3 +62,10 @@ def register():
             db.session.commit()
             flash("User created successfully!")
             return redirect(url_for("users.login"))
+        
+
+@user.route("/logout")
+def logout():
+    logout_user()
+    flash("Logout successful!")
+    return redirect(url_for("main.index"))
