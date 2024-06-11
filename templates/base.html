@@ -2,13 +2,9 @@
 <html>
 <head>
     <title>ToDo List Website</title>
-    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/styles.css') }}">
 </head>
 <body>
-    <header>
-        <h1>Welcome to Your ToDo List Website</h1>
-    </header>
-    
     <nav class="nav-bar">
         <ul>
             <li><a href="{{ url_for('main.index') }}">Home</a></li>
@@ -18,7 +14,9 @@
     </nav>
     
     <main>
+
         {% block content %} {% endblock %}
+
     </main>
     
     <footer class="foot">

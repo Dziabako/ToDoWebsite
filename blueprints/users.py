@@ -1,7 +1,7 @@
 from flask import render_template, Blueprint, flash, redirect, url_for
 from flask_login import login_user, logout_user, login_required, LoginManager
-from forms import LoginForm, RegisterForm
-from databases import User, db
+from blueprints.forms import LoginForm, RegisterForm
+from blueprints.databases import User, db
 from werkzeug.security import generate_password_hash, check_password_hash
 
 
@@ -62,6 +62,8 @@ def register():
             db.session.commit()
             flash("User created successfully!")
             return redirect(url_for("users.login"))
+    
+    return render_template("register.html")
         
 
 @user.route("/logout")

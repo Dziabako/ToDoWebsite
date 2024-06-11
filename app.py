@@ -8,8 +8,8 @@ app = Flask(__name__)
 app.config.from_pyfile("config.cfg")
 app.app_context().push()
 
-db.init_app(app)
-login_manager.init_app(app)
+# db.init_app(app)
+# login_manager.init_app(app)
 
 app.register_blueprint(main)
 app.register_blueprint(user)

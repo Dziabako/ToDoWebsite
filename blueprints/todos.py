@@ -1,6 +1,7 @@
 from flask import redirect, render_template, flash, url_for, Blueprint
 from flask_login import current_user, login_required
-from databases import ToDo, AddTodoForm, db
+from blueprints.databases import ToDo, db
+from blueprints.forms import AddTodoForm
 
 
 todo = Blueprint('todo', __name__)
@@ -30,3 +31,33 @@ def add_todo():
         db.session.commit()
         flash("Todo added successfully!")
         return redirect(url_for("todo.todos", user_id=current_user.id))
+    
+
+@login_required
+@todo.route('/delete_todo/<todo_id>')
+def delete_todo(todo_id):
+    # Retrieve the todo from the database
+    todo = ToDo.query.filter(ToDo.id == todo_id).first()
+
+    # Delete the todo from the database
+    db.session.delete(todo)
+    db.session.commit()
+    flash("Todo deleted successfully!")
+    return redirect(url_for("todo.todos", user_id=current_user.id))
+
+
+@login_required
+@todo.route("/change_status/<todo_id>")
+def change_status(todo_id):
+    # Retrieve the todo from the database
+    todo = ToDo.query.filter(ToDo.id == todo_id).first()
+
+    # Change the status of the todo
+    if todo.status == False:
+        todo.status = True
+    else:
+        todo.status = False
+    
+    db.session.commit()
+    flash("Todo status changed successfully!")
+    return redirect(url_for("todo.todos", user_id=current_user.id))
