@@ -39,6 +39,36 @@ body {
     margin: 10% auto;
     width: 50%;
     text-align: center;
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.title-text {
+    width: 70%;
+}
+
+.log-btn {
+    background-color: white;
+    color: black;
+    border: 2px solid black;
+    border-radius: 20px;
+    padding: 10px 20px;
+    cursor: pointer;
+    width: 25%;
+}
+
+.reg-btn {
+    background-color: white;
+    color: black;
+    border: 2px solid black;
+    border-radius: 20px;
+    padding: 10px 20px;
+    cursor: pointer;
+    width: 25%;
+    margin-top: 10px;
 }
 
 
