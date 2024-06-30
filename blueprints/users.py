@@ -37,7 +37,7 @@ def login():
             flash("Login successful!")
             return redirect(url_for("todos.todos", user_id=user.id))
 
-    return render_template('login.html')
+    return render_template('login.html', form=form)
 
 
 @user.route("/register", methods=["GET", "POST"])
