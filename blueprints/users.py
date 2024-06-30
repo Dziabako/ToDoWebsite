@@ -28,14 +28,14 @@ def login():
 
         if not user:
             flash("There is no such user! You can register a new user!")
-            return redirect(url_for("users.register"))
+            return redirect(url_for("user.register"))
         elif not check_password_hash(user.password, password):
             flash("Wrong password!")
-            return redirect(url_for("users.login"))
+            return redirect(url_for("user.login"))
         else:
             login_user(user)
             flash("Login successful!")
-            return redirect(url_for("todos.todos", user_id=user.id))
+            return redirect(url_for("todo.todos", user_id=user.id))
 
     return render_template('login.html', form=form)
 
@@ -45,7 +45,6 @@ def register():
     form = RegisterForm()
 
     if form.validate_on_submit():
-        username = form.username.data
         email = form.email.data
         password = form.password.data
         hashed_password = generate_password_hash(password)
@@ -55,15 +54,15 @@ def register():
 
         if user:
             flash("User already exists!")
-            return redirect(url_for("users.register"))
+            return redirect(url_for("user.register"))
         else:
-            new_user = User(username=username, email=email, password=hashed_password)
+            new_user = User(email=email, password=hashed_password)
             db.session.add(new_user)
             db.session.commit()
             flash("User created successfully!")
-            return redirect(url_for("users.login"))
+            return redirect(url_for("user.login"))
     
-    return render_template("register.html")
+    return render_template("register.html", form=form)
         
 
 @user.route("/logout")
