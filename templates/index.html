@@ -4,18 +4,29 @@
 {% block content %}
 <div class="container">
 
+    {% if not current_user.is_authenticated %}
     <div class="title-text">
         <h1>Your ToDo List</h1>
         <h2>Login or Register to start making Your own ToDo List</h2>
     </div>
 
-    <div class="log-btn">
+    <div class="basic-btn">
         <a href="{{ url_for('user.login') }}">Login</a>
     </div>
 
-    <div class="reg-btn">
+    <div class="basic-btn">
         <a href="{{ url_for('user.register') }}">Register</a>
     </div>
+    {% else %}
+    <div class="title-text">
+        <h1>Your ToDo List</h1>
+        <h2>You are already logged in!</h2>
+    </div>
+
+    <div class="basic-btn">
+        <a href="{{ url_for('todo.todos', user_id=current_user.id) }}">Go to Your ToDo List</a>
+    </div>
+    {% endif %}
 
 </div>
 

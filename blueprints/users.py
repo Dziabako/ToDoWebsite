@@ -1,5 +1,5 @@
 from flask import render_template, Blueprint, flash, redirect, url_for
-from flask_login import login_user, logout_user, login_required, LoginManager
+from flask_login import login_user, logout_user, login_required, LoginManager, current_user
 from blueprints.forms import LoginForm, RegisterForm
 from blueprints.databases import User, db
 from werkzeug.security import generate_password_hash, check_password_hash
@@ -18,6 +18,9 @@ def load_user(user_id):
 
 @user.route('/login', methods=["GET", "POST"])
 def login():
+    if current_user.is_authenticated:
+        return redirect(url_for('todo.todos', user_id=current_user.id))
+
     form = LoginForm()
 
     if form.validate_on_submit():
@@ -42,6 +45,10 @@ def login():
 
 @user.route("/register", methods=["GET", "POST"])
 def register():
+    if current_user.is_authenticated:
+        return redirect(url_for('todo.todos', user_id=current_user.id))
+
+
     form = RegisterForm()
 
     if form.validate_on_submit():

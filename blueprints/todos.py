@@ -12,9 +12,10 @@ todo = Blueprint('todo', __name__)
 def todos(user_id):
     # Retrieve todos for the logged user from the database
     todos = ToDo.query.filter(ToDo.user_id == user_id).all()
+    form = AddTodoForm()
 
     # Pass the todos to the template
-    return render_template('todos.html', todos=todos)
+    return render_template('todos.html', todos=todos, form=form)
 
 
 @login_required
@@ -26,7 +27,7 @@ def add_todo():
         todo = form.todo.data
 
         # Add the todo to the database
-        new_todo = ToDo(description=todo, status="Not Done", user_id=current_user.id)
+        new_todo = ToDo(description=todo, status=False, user_id=current_user.id)
         db.session.add(new_todo)
         db.session.commit()
         flash("Todo added successfully!")

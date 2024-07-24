@@ -5,6 +5,10 @@ body {
     background-size: cover;
 }
 
+a {
+    text-decoration: none;
+}
+
 
 /* NAVBAR */
 .nav-bar {
@@ -50,17 +54,7 @@ body {
     width: 70%;
 }
 
-.log-btn {
-    background-color: white;
-    color: black;
-    border: 2px solid black;
-    border-radius: 20px;
-    padding: 10px 20px;
-    cursor: pointer;
-    width: 25%;
-}
-
-.reg-btn {
+.basic-btn {
     background-color: white;
     color: black;
     border: 2px solid black;
@@ -96,6 +90,49 @@ body {
     margin: 1% 1%;
 }
 
+/* TODOS */
+.todo-list {
+    align-items: center;
+}
+
+.todo-text {
+    width: 500px;
+}
+
+.add-todo {
+    margin-top: 10%;
+}
+
+.task-col {
+    margin: 5px;
+    background-color: white;
+    color: black;
+    border: 2px solid black;
+    border-radius: 20px;
+    padding: 10px 20px;
+    width: 500px;
+}
+
+.table-btn {
+    text-decoration: none;
+    color: black;
+    border: 2px solid black;
+    border-radius: 20px;
+    padding: 10px 20px;
+    cursor: pointer;
+}
+
+.confirm-btn {
+    background-color: green;
+}
+
+.remove-btn {
+    background-color: red;
+}
+
+.edit-btn {
+    background-color: blue;
+}
 
 
 /* FOOTER */

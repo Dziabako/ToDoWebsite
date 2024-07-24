@@ -1,0 +1,66 @@
+{% extends 'base.html' %}
+
+
+{% block content %}
+    <div class="container">
+
+        <div class="title-text">
+            <h1>ToDo List</h1>
+        </div>
+
+        <div class="todo-list">
+            {% if not todos %}
+            <div>
+                <h2>No todos yet!</h2>
+            </div>
+            {% else %}
+            <table class="todo-table">
+                <thead>
+                    <tr>
+                        <th scope="col">Id</th>
+                        <th>Task</th>
+                        <th>Status</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    {% for todo in todos %}
+                    <tr>
+                        <td>{{ todo.id }}</td>
+                        
+                        {% if todo.status %}
+                        <td class="task-col" style="background-color: green;">{{ todo.description }}</td>
+                        <td class="status-col">&check;</td>
+                        {% else %}
+                        <td class="task-col">{{ todo.description }}</td>
+                        <td class="status-col">&#x25a2;</td>
+                        {% endif %}
+                        
+                        <td class="action-col">
+                            <a class="table-btn confirm-btn" href="{{ url_for('todo.change_status', todo_id=todo.id) }}">✓</a>
+                            <a class="table-btn remove-btn" href="{{ url_for('todo.delete_todo', todo_id=todo.id) }}">X</a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            {% endif %}
+        </div>
+
+        <div class="add-todo">
+            <h2>Add a new task</h2>
+            <form action="{{ url_for('todo.add_todo') }}" method="POST">
+                {{ form.csrf_token }}
+
+                <div>
+                    {{ form.todo(class_="todo-text form-group") }}
+                </div>
+                <div>
+                    {{ form.submit(class_="form-btn") }}
+                </div>
+            </form>
+        </div>
+
+    </div>
+{% endblock %}
